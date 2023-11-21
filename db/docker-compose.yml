@@ -1,0 +1,17 @@
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: mi-postgres
+    environment:
+      POSTGRES_DB: club_hub_db
+      POSTGRES_USER: admin_club_hub
+      POSTGRES_PASSWORD: 1yrOk4FVMzIufChCzju7OjXfVLbkDgnlFncVZ0XYLWz4
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./DDL.sql:/docker-entrypoint-initdb.d/DDL.sql
+
+volumes:
+  postgres_data:
