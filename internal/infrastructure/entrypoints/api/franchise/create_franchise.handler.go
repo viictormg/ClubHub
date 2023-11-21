@@ -22,8 +22,14 @@ func (f *Franchise) CreateFranchiseHandler(c echo.Context) error {
 
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err)
-
 	}
 
-	return nil
+	response, err := f.franchiseUsecase.CreateFranchiseUsecase(franchiseModelCreate)
+
+	if err != nil {
+		return c.JSON(http.StatusConflict, err)
+	}
+
+	return c.JSON(http.StatusCreated, response)
+
 }

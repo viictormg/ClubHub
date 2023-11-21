@@ -4,12 +4,14 @@ import (
 	"fmt"
 
 	"github.com/labstack/echo/v4"
+	franchiseUsecases "github.com/viictormg/clubHub/internal/application/usecase/franchise"
 	franchiseHandlers "github.com/viictormg/clubHub/internal/infrastructure/entrypoints/api/franchise"
 )
 
 func main() {
 
-	franchiseHandler := franchiseHandlers.NewFranchise()
+	franchiseUsecase := franchiseUsecases.NewFranchiseUsecase()
+	franchiseHandler := franchiseHandlers.NewFranchiseHandler(franchiseUsecase)
 
 	runServer(franchiseHandler)
 
