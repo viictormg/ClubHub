@@ -2,15 +2,17 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 
 	"github.com/labstack/echo/v4"
 	franchiseUsecases "github.com/viictormg/clubHub/internal/application/usecase/franchise"
+	franchiseAdapters "github.com/viictormg/clubHub/internal/infrastructure/adapters/http-consumer/franchise"
 	franchiseHandlers "github.com/viictormg/clubHub/internal/infrastructure/entrypoints/api/franchise"
 )
 
 func main() {
-
-	franchiseUsecase := franchiseUsecases.NewFranchiseUsecase()
+	franchiseAdapter := franchiseAdapters.NewFranchiseAdapter(&http.Client{})
+	franchiseUsecase := franchiseUsecases.NewFranchiseUsecase(franchiseAdapter)
 	franchiseHandler := franchiseHandlers.NewFranchiseHandler(franchiseUsecase)
 
 	runServer(franchiseHandler)
