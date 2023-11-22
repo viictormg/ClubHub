@@ -1,20 +1,73 @@
 package usecase
 
 import (
-	"errors"
-	"fmt"
 	"strings"
+	"sync"
 
+	"github.com/viictormg/clubHub/internal/application/mappers"
 	"github.com/viictormg/clubHub/internal/application/model"
 	"github.com/viictormg/clubHub/internal/domain/dto"
+	"github.com/viictormg/clubHub/internal/domain/entity"
 )
 
 func (f *FranchiseUsecase) CreateFranchiseUsecase(franchise model.FranchiseCreateModel) (*dto.CreationDTO, error) {
-	cleanURL := strings.TrimPrefix(franchise.URL, "www.")
+	cleanURL := CleanURL(franchise.URL)
 
-	response, err := f.FranchiseAdapter.ExtractURLInfoAdapter(cleanURL)
+	var franchiseEntity entity.FranchiseEntity
+	var wg sync.WaitGroup
 
-	fmt.Println(response, err)
+	wg.Add(3)
+	results := make(chan error, 1)
 
-	return &dto.CreationDTO{ID: "ddd"}, errors.New("d")
+	go func(myFranchise *entity.FranchiseEntity, errCh chan<- error) {
+		defer wg.Done()
+		sslInfo, err := f.FranchiseAdapter.ExtractURLInfoAdapter(cleanURL)
+		if err != nil {
+			errCh <- err
+			return
+		}
+		mappers.MapInfoURLToFranchiseEntity(myFranchise, sslInfo)
+	}(&franchiseEntity, results)
+
+	go func(myFranchise *entity.FranchiseEntity, errCh chan<- error) {
+		defer wg.Done()
+		domainInfo, err := f.FranchiseAdapter.ExtractInfoDomainAdapter(cleanURL)
+		if err != nil {
+			errCh <- err
+			return
+		}
+		mappers.MapInfoDomainToFranchiseEntity(myFranchise, domainInfo)
+
+	}(&franchiseEntity, results)
+
+	go func(myFranchise *entity.FranchiseEntity, errCh chan<- error) {
+		defer wg.Done()
+		urlImage, err := f.FranchiseAdapter.ExtractAssetsPageAdapter(cleanURL)
+		if err != nil {
+			errCh <- err
+			return
+		}
+		myFranchise.LogoURL = *urlImage
+	}(&franchiseEntity, results)
+
+	wg.Wait()
+	close(results)
+
+	return &dto.CreationDTO{ID: franchiseEntity}, nil
+}
+
+func CleanURL(url string) string {
+	cleanURL := url
+
+	replacements := map[string]string{
+		"www.":     "",
+		"http://":  "",
+		"https://": "",
+	}
+
+	for oldString, newString := range replacements {
+		cleanURL = strings.ReplaceAll(cleanURL, oldString, newString)
+	}
+
+	return cleanURL
 }
