@@ -41,7 +41,9 @@ CREATE TABLE franchise (
     domain_creation DATE,
     domain_expiration DATE,
     domain_owner_name VARCHAR(100),
-    domain_contact_email VARCHAR(100)
+    domain_contact_email VARCHAR(100),
+    redirections JSON,
+    number_redirections INT
 );
 
 INSERT INTO country (name, iso_code) VALUES

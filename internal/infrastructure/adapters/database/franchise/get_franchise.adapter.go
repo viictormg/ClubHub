@@ -4,10 +4,6 @@ import (
 	"github.com/viictormg/clubHub/internal/domain/dto"
 )
 
-const (
-	tableFranchise = "franchise"
-)
-
 func (f *FranchiseAdapter) GetFranchiseByID(id int) (*dto.Franchise, error) {
 	var franchise dto.Franchise
 

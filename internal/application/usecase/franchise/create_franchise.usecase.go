@@ -11,14 +11,19 @@ import (
 	"github.com/viictormg/clubHub/internal/domain/entity"
 )
 
+const (
+	numberOfRutines     = 3
+	numeroPosibleErrors = 4
+)
+
 func (f *FranchiseUsecase) CreateFranchiseUsecase(franchise model.FranchiseCreateModel) (*dto.CreationDTO, error) {
 	cleanURL := CleanURL(franchise.URL)
 
 	var franchiseEntity entity.FranchiseEntity
 	var wg sync.WaitGroup
 
-	wg.Add(3)
-	results := make(chan error, 3)
+	wg.Add(numberOfRutines)
+	results := make(chan error, numeroPosibleErrors)
 
 	go func(myFranchise *entity.FranchiseEntity, errCh chan<- error) {
 		defer wg.Done()
@@ -27,7 +32,7 @@ func (f *FranchiseUsecase) CreateFranchiseUsecase(franchise model.FranchiseCreat
 			errCh <- err
 			return
 		}
-		mappers.MapInfoURLToFranchiseEntity(myFranchise, sslInfo)
+		errCh <- mappers.MapInfoURLToFranchiseEntity(myFranchise, sslInfo)
 	}(&franchiseEntity, results)
 
 	go func(myFranchise *entity.FranchiseEntity, errCh chan<- error) {
@@ -59,7 +64,9 @@ func (f *FranchiseUsecase) CreateFranchiseUsecase(franchise model.FranchiseCreat
 		return nil, err
 	}
 
-	return &dto.CreationDTO{ID: franchiseEntity}, nil
+	mappers.MapInfoHardCodeToFranchiseEntity(&franchiseEntity)
+
+	return f.FranchiseAdapterDB.CreateFranchiseAdapter(&franchiseEntity)
 }
 
 func CleanURL(url string) string {

@@ -2,6 +2,10 @@ package database
 
 import "gorm.io/gorm"
 
+const (
+	tableFranchise = "franchise"
+)
+
 type FranchiseAdapter struct {
 	db *gorm.DB
 }
