@@ -2,7 +2,6 @@ package api
 
 import (
 	"errors"
-	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -14,7 +13,6 @@ func (f *Franchise) CreateFranchiseHandler(c echo.Context) error {
 
 	err := c.Bind(&franchiseModelCreate)
 
-	fmt.Println(franchiseModelCreate)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, errors.New("malformed body"))
 	}
@@ -22,8 +20,14 @@ func (f *Franchise) CreateFranchiseHandler(c echo.Context) error {
 
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err)
-
 	}
 
-	return nil
+	response, err := f.franchiseUsecase.CreateFranchiseUsecase(franchiseModelCreate)
+
+	if err != nil {
+		return c.JSON(http.StatusConflict, err)
+	}
+
+	return c.JSON(http.StatusCreated, response)
+
 }
