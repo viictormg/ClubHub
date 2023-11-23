@@ -41,6 +41,7 @@ func runServer(franchiseHandler *franchiseHandlers.Franchise) {
 
 	franchiseGroup.POST("/create", franchiseHandler.CreateFranchiseHandler)
 	franchiseGroup.GET("/getByID/:id", franchiseHandler.GetFranchiseByIDHandler)
+	franchiseGroup.GET("/getByParam", franchiseHandler.GetFranchiseByParamHandler)
 
 	err := e.Start(":3000")
 

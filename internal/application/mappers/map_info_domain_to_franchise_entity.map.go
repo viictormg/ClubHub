@@ -12,6 +12,7 @@ const (
 	containExpirationDateMessage             string = "Registrar Registration Expiration Date:"
 	containRegistrantOrganizationDateMessage string = "Registrant Organization:"
 	containEmailContant                      string = "Registrar Abuse Contact Email:"
+	containTechOrganization                  string = "Tech Organization: "
 )
 
 func MapInfoDomainToFranchiseEntity(franchise *entity.FranchiseEntity, infoDomain *string) error {
@@ -22,7 +23,7 @@ func MapInfoDomainToFranchiseEntity(franchise *entity.FranchiseEntity, infoDomai
 		fmt.Println(line)
 		if strings.Contains(line, containCreationDateMessage) {
 			franchise.DomainCreation = strings.ReplaceAll(line, containCreationDateMessage, "")
-			// break
+			break
 		}
 
 	}
@@ -43,6 +44,12 @@ func MapInfoDomainToFranchiseEntity(franchise *entity.FranchiseEntity, infoDomai
 	for _, line := range lines {
 		if strings.Contains(line, containEmailContant) {
 			franchise.DomainContactEmail = strings.ReplaceAll(line, containEmailContant, "")
+			break
+		}
+	}
+	for _, line := range lines {
+		if strings.Contains(line, containTechOrganization) {
+			franchise.Name = strings.ReplaceAll(line, containTechOrganization, "")
 			break
 		}
 	}

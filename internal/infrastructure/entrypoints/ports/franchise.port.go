@@ -8,4 +8,5 @@ import (
 type IFranchiseUsecase interface {
 	CreateFranchiseUsecase(model.FranchiseCreateModel) (*dto.CreationDTO, error)
 	GetFranchiseByIDUsecase(id int) (*dto.Franchise, error)
+	GetFranchiseParamUsecase(key, param string) (*[]dto.Franchise, error)
 }
