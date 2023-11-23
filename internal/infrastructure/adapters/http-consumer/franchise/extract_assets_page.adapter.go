@@ -11,7 +11,7 @@ const (
 	prefixWebScrapper string = "http://"
 )
 
-func (f *FranchiseAdapter) ExtractAssetsPageAdapter(url string) (*string, error) {
+func (f *FranchiseAdapterHTTP) ExtractAssetsPageAdapterHTTP(url string) (*string, error) {
 	c := colly.NewCollector()
 
 	var logoURL string
@@ -32,19 +32,41 @@ func (f *FranchiseAdapter) ExtractAssetsPageAdapter(url string) (*string, error)
 		c.OnHTML(selector, func(e *colly.HTMLElement) {
 			href := e.Attr("href")
 			if href != "" {
-				// Comprobar si la URL es relativa o absoluta
 				if strings.HasPrefix(href, "http") {
 					logoURL = href
 				} else {
-					// Convertir la URL relativa a absoluta
 					logoURL = url + href
 				}
 			}
 		})
 	}
 
-	// Visitar la URL y manejar errores
-	logoURL = "imagen-test"
+	err := c.Visit(fmt.Sprint(prefixWebScrapper, url))
+	if err != nil {
+		return nil, err
+	}
+	return &logoURL, nil
+}
+
+func (f *FranchiseAdapterHTTP) ExtractFooterPageAdapterHTTP(url string) (*string, error) {
+	c := colly.NewCollector()
+
+	var logoURL string
+
+	c.OnHTML("footer", func(e *colly.HTMLElement) {
+		// // Extraer información de correo
+		// email := e.ChildText(".email")
+
+		// // Extraer información de dirección
+		// address := e.ChildText(".address")
+
+		// // Extraer información de ciudad
+		// city := e.ChildText(".city")
+
+		// // Puedes hacer algo con la información extraída, como imprimir o almacenar en una estructura de datos
+		// fmt.Printf("Email: %s, Address: %s, City: %s\n", email, address, city)
+	})
+
 	err := c.Visit(fmt.Sprint(prefixWebScrapper, url))
 	if err != nil {
 		return nil, err

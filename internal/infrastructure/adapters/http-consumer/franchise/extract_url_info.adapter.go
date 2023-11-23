@@ -11,7 +11,7 @@ const (
 	URL_GET_INFO_SITE string = "https://api.ssllabs.com/api/v3/analyze/"
 )
 
-func (f *FranchiseAdapter) ExtractURLInfoAdapter(domain string) (*dto.SSLInfoResultDTO, error) {
+func (f *FranchiseAdapterHTTP) ExtractURLInfoAdapterHTTP(domain string) (*dto.SSLInfoResultDTO, error) {
 	var infoResultDTO dto.SSLInfoResultDTO
 
 	request, _ := http.NewRequest(http.MethodGet, URL_GET_INFO_SITE, http.NoBody)

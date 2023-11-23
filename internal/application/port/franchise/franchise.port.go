@@ -2,8 +2,13 @@ package ports
 
 import "github.com/viictormg/clubHub/internal/domain/dto"
 
-type IFranchiseAdapter interface {
-	ExtractURLInfoAdapter(url string) (*dto.SSLInfoResultDTO, error)
-	ExtractInfoDomainAdapter(url string) (*string, error)
-	ExtractAssetsPageAdapter(url string) (*string, error)
+type IFranchiseAdapterHTTP interface {
+	ExtractURLInfoAdapterHTTP(url string) (*dto.SSLInfoResultDTO, error)
+	ExtractInfoDomainAdapterHTTP(url string) (*string, error)
+	ExtractAssetsPageAdapterHTTP(url string) (*string, error)
+	ExtractFooterPageAdapterHTTP(url string) (*string, error)
+}
+
+type IFranchiseAdapterDB interface {
+	GetFranchiseByID(id int) (*dto.Franchise, error)
 }

@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"fmt"
 	"strings"
 	"sync"
 
@@ -17,11 +18,11 @@ func (f *FranchiseUsecase) CreateFranchiseUsecase(franchise model.FranchiseCreat
 	var wg sync.WaitGroup
 
 	wg.Add(3)
-	results := make(chan error, 1)
+	results := make(chan error, 3)
 
 	go func(myFranchise *entity.FranchiseEntity, errCh chan<- error) {
 		defer wg.Done()
-		sslInfo, err := f.FranchiseAdapter.ExtractURLInfoAdapter(cleanURL)
+		sslInfo, err := f.FranchiseAdapterHTTP.ExtractURLInfoAdapterHTTP(cleanURL)
 		if err != nil {
 			errCh <- err
 			return
@@ -31,7 +32,7 @@ func (f *FranchiseUsecase) CreateFranchiseUsecase(franchise model.FranchiseCreat
 
 	go func(myFranchise *entity.FranchiseEntity, errCh chan<- error) {
 		defer wg.Done()
-		domainInfo, err := f.FranchiseAdapter.ExtractInfoDomainAdapter(cleanURL)
+		domainInfo, err := f.FranchiseAdapterHTTP.ExtractInfoDomainAdapterHTTP(cleanURL)
 		if err != nil {
 			errCh <- err
 			return
@@ -42,7 +43,7 @@ func (f *FranchiseUsecase) CreateFranchiseUsecase(franchise model.FranchiseCreat
 
 	go func(myFranchise *entity.FranchiseEntity, errCh chan<- error) {
 		defer wg.Done()
-		urlImage, err := f.FranchiseAdapter.ExtractAssetsPageAdapter(cleanURL)
+		urlImage, err := f.FranchiseAdapterHTTP.ExtractAssetsPageAdapterHTTP(cleanURL)
 		if err != nil {
 			errCh <- err
 			return
@@ -52,6 +53,11 @@ func (f *FranchiseUsecase) CreateFranchiseUsecase(franchise model.FranchiseCreat
 
 	wg.Wait()
 	close(results)
+
+	err := verifyErrorsRutines(results)
+	if err != nil {
+		return nil, err
+	}
 
 	return &dto.CreationDTO{ID: franchiseEntity}, nil
 }
@@ -70,4 +76,14 @@ func CleanURL(url string) string {
 	}
 
 	return cleanURL
+}
+
+func verifyErrorsRutines(jobs chan error) error {
+	for job := range jobs {
+		fmt.Println(job)
+		if job != nil {
+			return job
+		}
+	}
+	return nil
 }

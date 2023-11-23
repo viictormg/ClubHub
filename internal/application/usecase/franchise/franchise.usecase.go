@@ -3,11 +3,13 @@ package usecase
 import ports "github.com/viictormg/clubHub/internal/application/port/franchise"
 
 type FranchiseUsecase struct {
-	FranchiseAdapter ports.IFranchiseAdapter
+	FranchiseAdapterHTTP ports.IFranchiseAdapterHTTP
+	FranchiseAdapterDB   ports.IFranchiseAdapterDB
 }
 
-func NewFranchiseUsecase(FranchiseAdapter ports.IFranchiseAdapter) *FranchiseUsecase {
+func NewFranchiseUsecase(FranchiseAdapter ports.IFranchiseAdapterHTTP, FranchiseAdapterDB ports.IFranchiseAdapterDB) *FranchiseUsecase {
 	return &FranchiseUsecase{
-		FranchiseAdapter: FranchiseAdapter,
+		FranchiseAdapterHTTP: FranchiseAdapter,
+		FranchiseAdapterDB:   FranchiseAdapterDB,
 	}
 }
