@@ -13,6 +13,8 @@ type IFranchiseAdapterHTTP interface {
 }
 
 type IFranchiseAdapterDB interface {
-	GetFranchiseByID(id int) (*dto.Franchise, error)
 	CreateFranchiseAdapter(newFranchise *entity.FranchiseEntity) (*dto.CreationDTO, error)
+	GetFranchiseByIDAdapter(id int) (*entity.FranchiseEntity, error)
+	GetFranchiseByNameAdapter(name string) (*entity.FranchiseEntity, error)
+	GetFranchisesByParamAdapter(key, value string) (*[]entity.FranchiseEntity, error)
 }

@@ -47,9 +47,9 @@ CREATE TABLE franchise (
 );
 
 INSERT INTO country (name, iso_code) VALUES
-    ('Country1', 'C1'),
-    ('Country2', 'C2'),
-    ('Country3', 'C3');
+    ('Colombia', 'CO'),
+    ('Mexito', 'MX'),
+    ('Salvador', 'SV');
 
 INSERT INTO owner (first_name, last_name, email, phone, city, country_code_id, address, zip_code) VALUES
     ('John', 'Doe', 'john.doe@example.com', '123456789', 'City1', 1, 'Address1', '12345'),
