@@ -1,6 +1,7 @@
+version: '3'
 
 services:
-  postgres:
+  db:
     image: postgres:latest
     container_name: mi-postgres
     environment:
@@ -13,5 +14,22 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./DDL.sql:/docker-entrypoint-initdb.d/DDL.sql
 
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - APP_ENV=development
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=admin_club_hub
+      - DB_PASSWORD=1yrOk4FVMzIufChCzju7OjXfVLbkDgnlFncVZ0XYLWz4
+      - DB_NAME=club_hub_db
+    depends_on:
+      - db
+
 volumes:
   postgres_data:
+  
