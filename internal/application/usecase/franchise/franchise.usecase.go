@@ -1,6 +1,6 @@
 package usecase
 
-import ports "github.com/viictormg/clubHub/internal/application/port/franchise"
+import ports "github.com/viictormg/clubHub/internal/application/port"
 
 type FranchiseUsecase struct {
 	FranchiseAdapterHTTP ports.IFranchiseAdapterHTTP

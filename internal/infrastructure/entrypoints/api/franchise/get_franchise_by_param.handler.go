@@ -5,22 +5,19 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-)
-
-const (
-	messageParamaRequired string = "%s is required"
+	"github.com/viictormg/clubHub/internal/domain/constants"
 )
 
 func (f *Franchise) GetFranchiseByParamHandler(c echo.Context) error {
 
 	key := c.QueryParam("key")
 	if key == "" {
-		return c.JSON(http.StatusBadRequest, fmt.Errorf(messageParamaRequired, "key"))
+		return c.JSON(http.StatusBadRequest, fmt.Errorf(constants.MessageParamaRequired, "key"))
 	}
 	value := c.QueryParam("value")
 
 	if value == "" {
-		return c.JSON(http.StatusBadRequest, fmt.Errorf(messageParamaRequired, "value"))
+		return c.JSON(http.StatusBadRequest, fmt.Errorf(constants.MessageParamaRequired, "value"))
 	}
 
 	response, err := f.franchiseUsecase.GetFranchiseParamUsecase(key, value)

@@ -17,4 +17,5 @@ type IFranchiseAdapterDB interface {
 	GetFranchiseByIDAdapter(id int) (*entity.FranchiseEntity, error)
 	GetFranchiseByNameAdapter(name string) (*entity.FranchiseEntity, error)
 	GetFranchisesByParamAdapter(key, value string) (*[]entity.FranchiseEntity, error)
+	GetFranchisesByCompanyID(companyID int) (*[]entity.FranchiseEntity, error)
 }

@@ -1,6 +1,6 @@
 package entity
 
-type Company struct {
+type CompanyEntity struct {
 	ID            int    `json:"id"`
 	Name          string `json:"name"`
 	TaxNumber     string `json:"taxNumber"`
