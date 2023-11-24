@@ -118,3 +118,71 @@ paths:
                     ZipCode:
                       type: string
                       description: "Código postal de la franquicia"
+
+  /api/clubhub/franchise/getByName:
+    get:
+      summary: "Obtener información de una franquicia por nombre"
+      produces:
+        - "application/json"
+      parameters:
+        - name: name
+          in: query
+          description: "Nombre de la franquicia"
+          required: true
+          type: string
+      responses:
+        '200':
+          description: "Operación exitosa"
+          schema:
+            type: object
+            properties:
+              Name:
+                type: string
+                description: "Nombre de la franquicia"
+              URL:
+                type: string
+                description: "URL de la franquicia"
+              Location:
+                type: object
+                properties:
+                  City:
+                    type: string
+                    description: "Ciudad de la franquicia"
+                  CountryCode:
+                    type: string
+                    description: "Código de país de la franquicia"
+                  Address:
+                    type: string
+                    description: "Dirección de la franquicia"
+                  ZipCode:
+                    type: string
+                    description: "Código postal de la franquicia"
+
+  /api/clubhub/company/getByName:
+    get:
+      summary: "Obtener información de una empresa por nombre"
+      produces:
+        - "application/json"
+      parameters:
+        - name: name
+          in: query
+          description: "Nombre de la empresa"
+          required: true
+          type: string
+      responses:
+        '200':
+          description: "Operación exitosa"
+          schema:
+            type: object
+            properties:
+              company:
+                type: object
+                properties:
+                  owner:
+                    type: object
+                    properties:
+                      firstName:
+                        type: string
+                        description: "Nombre del propietario"
+                      lastName:
+                        type: string
