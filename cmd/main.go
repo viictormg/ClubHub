@@ -9,6 +9,7 @@ import (
 	pkg "github.com/viictormg/clubHub/internal/infrastructure/pkg"
 
 	franchiseUsecases "github.com/viictormg/clubHub/internal/application/usecase/franchise"
+	countryAdapters "github.com/viictormg/clubHub/internal/infrastructure/adapters/database/country"
 	franchiseAdapters "github.com/viictormg/clubHub/internal/infrastructure/adapters/database/franchise"
 	franchiseAdaptersHTTP "github.com/viictormg/clubHub/internal/infrastructure/adapters/http-consumer/franchise"
 	franchiseHandlers "github.com/viictormg/clubHub/internal/infrastructure/entrypoints/api/franchise"
@@ -22,10 +23,11 @@ func main() {
 	}
 	db := pkg.NewPostgresConection()
 
+	countryAdapter := countryAdapters.NewCountryAdapterDB(db)
 	franchiseAdapter := franchiseAdapters.NewFranchiseAdapter(db)
 
 	franchiseAdapterHTTP := franchiseAdaptersHTTP.NewFranchiseAdapterHTTP(&http.Client{})
-	franchiseUsecase := franchiseUsecases.NewFranchiseUsecase(franchiseAdapterHTTP, franchiseAdapter)
+	franchiseUsecase := franchiseUsecases.NewFranchiseUsecase(franchiseAdapterHTTP, franchiseAdapter, countryAdapter)
 	franchiseHandler := franchiseHandlers.NewFranchiseHandler(franchiseUsecase)
 
 	runServer(franchiseHandler)
@@ -42,6 +44,7 @@ func runServer(franchiseHandler *franchiseHandlers.Franchise) {
 	franchiseGroup.POST("/create", franchiseHandler.CreateFranchiseHandler)
 	franchiseGroup.GET("/getByID/:id", franchiseHandler.GetFranchiseByIDHandler)
 	franchiseGroup.GET("/getByParam", franchiseHandler.GetFranchiseByParamHandler)
+	franchiseGroup.GET("/getByName", franchiseHandler.GetFranchiseByNameHandler)
 
 	err := e.Start(":3000")
 

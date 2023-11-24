@@ -1,11 +1,11 @@
 package database
 
 import (
-	"github.com/viictormg/clubHub/internal/domain/dto"
+	"github.com/viictormg/clubHub/internal/domain/entity"
 )
 
-func (f *FranchiseAdapter) GetFranchisesByParamAdapter(key, value string) (*[]dto.Franchise, error) {
-	var franchises []dto.Franchise
+func (f *FranchiseAdapter) GetFranchisesByParamAdapter(key, value string) (*[]entity.FranchiseEntity, error) {
+	var franchises []entity.FranchiseEntity
 
 	err := f.db.Table(tableFranchise).
 		Where(key+" ILIKE ?", "%"+value+"%").

@@ -7,23 +7,14 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-const (
-	messageParamaRequired string = "%s is required"
-)
+func (f *Franchise) GetFranchiseByNameHandler(c echo.Context) error {
+	name := c.QueryParam("name")
 
-func (f *Franchise) GetFranchiseByParamHandler(c echo.Context) error {
-
-	key := c.QueryParam("key")
-	if key == "" {
-		return c.JSON(http.StatusBadRequest, fmt.Errorf(messageParamaRequired, "key"))
-	}
-	value := c.QueryParam("value")
-
-	if value == "" {
-		return c.JSON(http.StatusBadRequest, fmt.Errorf(messageParamaRequired, "value"))
+	if name == "" {
+		return c.JSON(http.StatusBadRequest, fmt.Errorf(messageParamaRequired, "name"))
 	}
 
-	response, err := f.franchiseUsecase.GetFranchiseParamUsecase(key, value)
+	response, err := f.franchiseUsecase.GetFranchiseByNameUsecase(name)
 	if err != nil {
 		return c.JSON(http.StatusConflict, err)
 	}

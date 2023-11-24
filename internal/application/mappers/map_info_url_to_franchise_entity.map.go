@@ -25,6 +25,7 @@ func MapInfoURLToFranchiseEntity(franchise *entity.FranchiseEntity, sslInfo *dto
 	franchise.Protocol = sslInfo.Protocol
 	franchise.Redirections = string(jsonData)
 	franchise.NumberRedirections = len(redirections)
+	franchise.URL = sslInfo.Host
 
 	return nil
 }

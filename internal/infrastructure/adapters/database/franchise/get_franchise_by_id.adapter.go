@@ -1,11 +1,11 @@
 package database
 
 import (
-	"github.com/viictormg/clubHub/internal/domain/dto"
+	"github.com/viictormg/clubHub/internal/domain/entity"
 )
 
-func (f *FranchiseAdapter) GetFranchiseByIDAdapter(id int) (*dto.Franchise, error) {
-	var franchise dto.Franchise
+func (f *FranchiseAdapter) GetFranchiseByIDAdapter(id int) (*entity.FranchiseEntity, error) {
+	var franchise entity.FranchiseEntity
 
 	err := f.db.Table(tableFranchise).
 		Where("id = ?", id).
