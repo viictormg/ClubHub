@@ -1,0 +1,157 @@
+{
+	"info": {
+		"_postman_id": "4442bb4e-dd98-4eaa-a878-5c3b4cba50c6",
+		"name": "clubhub",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6040856"
+	},
+	"item": [
+		{
+			"name": "create franchise",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"URL\" : \"www.marriott.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/clubhub/franchise/create",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"clubhub",
+						"franchise",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get franchise by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/clubhub/franchise/getByID/2",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"clubhub",
+						"franchise",
+						"getByID",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get franchise by param",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/clubhub/franchise/getByParam?key=name&value=ma",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"clubhub",
+						"franchise",
+						"getByParam"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "name"
+						},
+						{
+							"key": "value",
+							"value": "ma"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get franchise by name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/clubhub/franchise/getByName?name=Marriott International, Inc.",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"clubhub",
+						"franchise",
+						"getByName"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Marriott International, Inc."
+						},
+						{
+							"key": "value",
+							"value": "ma",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get company by name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/clubhub/franchise/getByName?name=Marriott International, Inc.",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"clubhub",
+						"franchise",
+						"getByName"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Marriott International, Inc."
+						},
+						{
+							"key": "value",
+							"value": "ma",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
