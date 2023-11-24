@@ -1,0 +1,188 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "ClubHub API"
+paths:
+  /api/clubhub/franchise/create:
+    post:
+      summary: "Crear una franquicia en ClubHub"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: body
+          name: franchiseData
+          description: "Datos de la franquicia a crear"
+          required: true
+          schema:
+            type: object
+            properties:
+              URL:
+                type: string
+      responses:
+        '200':
+          description: "Operación exitosa"
+          schema:
+            type: object
+            properties:
+              ID:
+                type: integer
+                description: "ID de la franquicia creada"
+        '400':
+          description: "Solicitud incorrecta"
+
+  /api/clubhub/franchise/getByID/{id}:
+    get:
+      summary: "Obtener información de una franquicia por ID"
+      produces:
+        - "application/json"
+      parameters:
+        - name: id
+          in: path
+          description: "ID de la franquicia"
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: "Operación exitosa"
+          schema:
+            type: object
+            properties:
+              Name:
+                type: string
+                description: "Nombre de la franquicia"
+              URL:
+                type: string
+                description: "URL de la franquicia"
+              Location:
+                type: object
+                properties:
+                  City:
+                    type: string
+                    description: "Ciudad de la franquicia"
+                  CountryCode:
+                    type: string
+                    description: "Código de país de la franquicia"
+                  Address:
+                    type: string
+                    description: "Dirección de la franquicia"
+                  ZipCode:
+                    type: string
+                    description: "Código postal de la franquicia"
+        '404':
+          description: "Franquicia no encontrada"
+
+  /api/clubhub/franchise/getByParam:
+    get:
+      summary: "Obtener franquicias por parámetros"
+      produces:
+        - "application/json"
+      parameters:
+        - name: key
+          in: query
+          description: "Clave para la búsqueda"
+          required: true
+          type: string
+        - name: value
+          in: query
+          description: "Valor para la búsqueda"
+          required: true
+          type: string
+      responses:
+        '200':
+          description: "Operación exitosa"
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                Name:
+                  type: string
+                  description: "Nombre de la franquicia"
+                URL:
+                  type: string
+                  description: "URL de la franquicia"
+                Location:
+                  type: object
+                  properties:
+                    City:
+                      type: string
+                      description: "Ciudad de la franquicia"
+                    CountryCode:
+                      type: string
+                      description: "Código de país de la franquicia"
+                    Address:
+                      type: string
+                      description: "Dirección de la franquicia"
+                    ZipCode:
+                      type: string
+                      description: "Código postal de la franquicia"
+
+  /api/clubhub/franchise/getByName:
+    get:
+      summary: "Obtener información de una franquicia por nombre"
+      produces:
+        - "application/json"
+      parameters:
+        - name: name
+          in: query
+          description: "Nombre de la franquicia"
+          required: true
+          type: string
+      responses:
+        '200':
+          description: "Operación exitosa"
+          schema:
+            type: object
+            properties:
+              Name:
+                type: string
+                description: "Nombre de la franquicia"
+              URL:
+                type: string
+                description: "URL de la franquicia"
+              Location:
+                type: object
+                properties:
+                  City:
+                    type: string
+                    description: "Ciudad de la franquicia"
+                  CountryCode:
+                    type: string
+                    description: "Código de país de la franquicia"
+                  Address:
+                    type: string
+                    description: "Dirección de la franquicia"
+                  ZipCode:
+                    type: string
+                    description: "Código postal de la franquicia"
+
+  /api/clubhub/company/getByName:
+    get:
+      summary: "Obtener información de una empresa por nombre"
+      produces:
+        - "application/json"
+      parameters:
+        - name: name
+          in: query
+          description: "Nombre de la empresa"
+          required: true
+          type: string
+      responses:
+        '200':
+          description: "Operación exitosa"
+          schema:
+            type: object
+            properties:
+              company:
+                type: object
+                properties:
+                  owner:
+                    type: object
+                    properties:
+                      firstName:
+                        type: string
+                        description: "Nombre del propietario"
+                      lastName:
+                        type: string
