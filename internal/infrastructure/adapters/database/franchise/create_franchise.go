@@ -5,7 +5,7 @@ import (
 	"github.com/viictormg/clubHub/internal/domain/entity"
 )
 
-func (f *FranchiseAdapter) CreateFranchiseAdapter(newFranchise *entity.FranchiseEntity) (*dto.CreationDTO, error) {
+func (f *FranchiseAdapter) CreateFranchiseAdapter(newFranchise entity.FranchiseEntity) (*dto.CreationDTO, error) {
 	err := f.db.Table(tableFranchise).
 		Create(&newFranchise).Error
 

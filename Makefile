@@ -5,7 +5,7 @@ test:
 	go test ./... -cover -coverprofile=coverage.out
 
 gen-mocks:
-	mockert --dir=./internal --all
+	mockery --dir=./internal --all
 
 
 watch-coverage:

@@ -18,26 +18,25 @@ func TestCreateFranchiseHandler(t *testing.T) {
 	t.Run("error malformed body", func(t *testing.T) {
 		e := echo.New()
 
-		franchiseUsecase := new(mocks.IFranchiseUsecase)
-
+		franchiseUsecaseMock := new(mocks.IFranchiseUsecase)
 		req := httptest.NewRequest(http.MethodPost, "/franchise/create", bytes.NewBuffer([]byte("1")))
 		req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 		rec := httptest.NewRecorder()
-
 		ctx := e.NewContext(req, rec)
 
-		franchiseHandler := NewFranchiseHandler(franchiseUsecase)
+		franchiseHandler := NewFranchiseHandler(franchiseUsecaseMock)
 
 		if assert.NoError(t, franchiseHandler.CreateFranchiseHandler(ctx)) {
 			assert.Equal(t, rec.Code, http.StatusBadRequest)
 		}
+		franchiseUsecaseMock.AssertExpectations(t)
 
 	})
 
 	t.Run("error validation franchise model", func(t *testing.T) {
 		e := echo.New()
-		franchiseUsecase := new(mocks.IFranchiseUsecase)
+		franchiseUsecaseMock := new(mocks.IFranchiseUsecase)
 		franchiseModelStub := stubs.GetFranchiseModelBadStub()
 		payload, _ := json.Marshal(franchiseModelStub)
 
@@ -46,11 +45,12 @@ func TestCreateFranchiseHandler(t *testing.T) {
 		rec := httptest.NewRecorder()
 		ctx := e.NewContext(req, rec)
 
-		franchiseHandler := NewFranchiseHandler(franchiseUsecase)
+		franchiseHandler := NewFranchiseHandler(franchiseUsecaseMock)
 
 		if assert.NoError(t, franchiseHandler.CreateFranchiseHandler(ctx)) {
 			assert.Equal(t, rec.Code, http.StatusBadRequest)
 		}
+		franchiseUsecaseMock.AssertExpectations(t)
 
 	})
 
@@ -70,6 +70,8 @@ func TestCreateFranchiseHandler(t *testing.T) {
 		if assert.NoError(t, franchiseHandler.CreateFranchiseHandler(ctx)) {
 			assert.Equal(t, rec.Code, http.StatusConflict)
 		}
+		franchiseUsecaseMock.AssertExpectations(t)
+
 	})
 
 	t.Run("create franchise usecase successful", func(t *testing.T) {
@@ -90,5 +92,6 @@ func TestCreateFranchiseHandler(t *testing.T) {
 		if assert.NoError(t, franchiseHandler.CreateFranchiseHandler(ctx)) {
 			assert.Equal(t, rec.Code, http.StatusCreated)
 		}
+		franchiseUsecaseMock.AssertExpectations(t)
 	})
 }

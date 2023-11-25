@@ -15,7 +15,7 @@ type IFranchiseAdapterDB struct {
 }
 
 // CreateFranchiseAdapter provides a mock function with given fields: newFranchise
-func (_m *IFranchiseAdapterDB) CreateFranchiseAdapter(newFranchise *entity.FranchiseEntity) (*dto.CreationDTO, error) {
+func (_m *IFranchiseAdapterDB) CreateFranchiseAdapter(newFranchise entity.FranchiseEntity) (*dto.CreationDTO, error) {
 	ret := _m.Called(newFranchise)
 
 	if len(ret) == 0 {
@@ -24,10 +24,10 @@ func (_m *IFranchiseAdapterDB) CreateFranchiseAdapter(newFranchise *entity.Franc
 
 	var r0 *dto.CreationDTO
 	var r1 error
-	if rf, ok := ret.Get(0).(func(*entity.FranchiseEntity) (*dto.CreationDTO, error)); ok {
+	if rf, ok := ret.Get(0).(func(entity.FranchiseEntity) (*dto.CreationDTO, error)); ok {
 		return rf(newFranchise)
 	}
-	if rf, ok := ret.Get(0).(func(*entity.FranchiseEntity) *dto.CreationDTO); ok {
+	if rf, ok := ret.Get(0).(func(entity.FranchiseEntity) *dto.CreationDTO); ok {
 		r0 = rf(newFranchise)
 	} else {
 		if ret.Get(0) != nil {
@@ -35,7 +35,7 @@ func (_m *IFranchiseAdapterDB) CreateFranchiseAdapter(newFranchise *entity.Franc
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(*entity.FranchiseEntity) error); ok {
+	if rf, ok := ret.Get(1).(func(entity.FranchiseEntity) error); ok {
 		r1 = rf(newFranchise)
 	} else {
 		r1 = ret.Error(1)

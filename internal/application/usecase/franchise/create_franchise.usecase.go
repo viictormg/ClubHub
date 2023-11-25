@@ -66,7 +66,7 @@ func (f *FranchiseUsecase) CreateFranchiseUsecase(franchise model.FranchiseCreat
 
 	mappers.MapInfoHardCodeToFranchiseEntity(&franchiseEntity)
 
-	return f.FranchiseAdapterDB.CreateFranchiseAdapter(&franchiseEntity)
+	return f.FranchiseAdapterDB.CreateFranchiseAdapter(franchiseEntity)
 }
 
 func CleanURL(url string) string {
